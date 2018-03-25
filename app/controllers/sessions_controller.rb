@@ -6,6 +6,13 @@ class SessionsController < ApplicationController
     code          = params[:code]
     response      = Faraday.post("https://github.com/login/oauth/access_token?client_id=#{client_id}&client_secret=#{client_secret}&code=#{code}")
 
+    pairs = response.body.split("&")
+    response_hash = {}
+    pairs.each do |pair|
+      key, value = pair.split("=")
+      response_hash[key] = value
+    end
+
   end
 
 end
